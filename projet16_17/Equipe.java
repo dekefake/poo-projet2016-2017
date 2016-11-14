@@ -15,4 +15,40 @@ public class Equipe {
 		titulaires = new Joueur[nbTitulaire];
 		remplacants = new Joueur[nbRemplacants];
 	}
+
+	public boolean estPlein(Joueur[] t) {
+		return t[t.length - 1] != null;
+	}
+
+	public boolean aUnGardien() {
+		int i = 0;
+		while (titulaires[i] != null) {
+			if (titulaires[i].getPoste() == Poste.GARDIEN) {
+				return true;
+			}
+			i++;
+		}
+		return false;
+	}
+
+	public void ajouterJoueur(Joueur j) throws IllegalStateException {
+		if (j.getPoste() == Poste.GARDIEN) {
+			throw new IllegalStateException("Depuis quand une equipe de foot a plusieurs gardiens ??");
+		}
+		if (estPlein(titulaires)) {
+			throw new IllegalStateException(
+					"Le fair play n'a jamais tué personne. " + (titulaires.length - 1) + " joueurs titulaires max.");
+		}
+		int i = 0;
+		while (titulaires[i] != null) {
+			i++;
+		}
+		while (i < titulaires.length) {
+			if (j.getNumeroDeLicence() == titulaires[i].getNumeroDeLicence()) {
+				throw new IllegalStateException(
+						"Le joueur " + j.getNumeroDeLicence() + " fait deja partie de l'équipe.");
+			}
+		}
+		titulaires[i] = j;
+	}
 }

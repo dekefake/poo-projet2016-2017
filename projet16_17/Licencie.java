@@ -3,6 +3,7 @@ package projet16_17;
 import java.util.Calendar;
 
 public abstract class Licencie {
+
 	private int numeroDeLicence;
 	private String nom, prenom;
 	private Calendar dateDeValidite;
@@ -16,5 +17,9 @@ public abstract class Licencie {
 												// lier certaines choses en
 												// mémoire..
 		club = c;
+	}
+	
+	public int getNumeroDeLicence() {
+		return numeroDeLicence;
 	}
 }
