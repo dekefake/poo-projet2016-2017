@@ -3,7 +3,7 @@ package projet16_17;
 public class Equipe {
 	private Joueur[] titulaires, remplacants;
 
-	public Equipe(int nbTitulaire, int nbRemplacants) {
+	public Equipe(int nbTitulaire, int nbRemplacants) throws IllegalArgumentException {
 		if (nbTitulaire < 1) {
 			throw new IllegalArgumentException("Le nombre de joueurs titulaires ne peut pas être inferieur à 1.");
 		}
