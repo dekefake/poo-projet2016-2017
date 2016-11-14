@@ -25,5 +25,5 @@ public class Joueur extends Licencie {
 		Joueur other = (Joueur) obj;
 		return other.getNumeroDeLicence()==getNumeroDeLicence();
 	}
-
+	
 }

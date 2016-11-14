@@ -50,6 +50,9 @@ public class Equipe {
 	}
 
 	public void ajouterJoueurTitulaire(Joueur j) throws IllegalStateException {
+		if(j.getClub()!=club){
+			throw new IllegalStateException("Ce joueur ne fait pas partie du meme club que l'équipe");
+		}
 		if (aUnGardien() && j.getPoste() == Poste.GARDIEN) {
 			throw new IllegalStateException("Depuis quand une equipe de foot a plusieurs gardiens ??");
 		}
@@ -71,6 +74,9 @@ public class Equipe {
 	}
 	
 	public void ajouterJoueurRemplacant(Joueur j) throws IllegalStateException {
+		if(j.getClub()!=club){
+			throw new IllegalStateException("Ce joueur ne fait pas partie du meme club que l'équipe");
+		}
 		if (j.getPoste() == Poste.GARDIEN) {
 			throw new IllegalStateException("Depuis quand une equipe de foot a plusieurs gardiens ??");
 		}

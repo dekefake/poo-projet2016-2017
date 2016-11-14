@@ -22,4 +22,8 @@ public abstract class Licencie {
 	public int getNumeroDeLicence() {
 		return numeroDeLicence;
 	}
+	public Club getClub(){
+		return club;
+	}
+
 }
