@@ -23,9 +23,7 @@ public class Joueur extends Licencie {
 		if (getClass() != obj.getClass())
 			return false;
 		Joueur other = (Joueur) obj;
-		if (poste != other.poste)
-			return false;
-		return true;
+		return other.getNumeroDeLicence()==getNumeroDeLicence();
 	}
 
 }

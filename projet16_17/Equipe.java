@@ -2,6 +2,8 @@ package projet16_17;
 
 public class Equipe {
 	private Joueur[] titulaires, remplacants;
+	private Club club;
+	private int id; 
 
 	public Equipe(int nbTitulaire, int nbRemplacants) throws IllegalArgumentException {
 		if (nbTitulaire < 1) {
@@ -31,8 +33,24 @@ public class Equipe {
 		return false;
 	}
 
-	public void ajouterJoueur(Joueur j) throws IllegalStateException {
-		if (j.getPoste() == Poste.GARDIEN) {
+	public boolean detientJoueur(Joueur j) {
+		int i = 0;
+		while (titulaires[i] != null) {
+			if (titulaires[i].equals(j)) {
+				return true;
+			}
+		}
+		i = 0;
+		while (remplacants[i] != null) {
+			if (remplacants[i].equals(j)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public void ajouterJoueurTitulaire(Joueur j) throws IllegalStateException {
+		if (aUnGardien() && j.getPoste() == Poste.GARDIEN) {
 			throw new IllegalStateException("Depuis quand une equipe de foot a plusieurs gardiens ??");
 		}
 		if (estPlein(titulaires)) {
@@ -44,11 +62,32 @@ public class Equipe {
 			i++;
 		}
 		while (i < titulaires.length) {
-			if (j.getNumeroDeLicence() == titulaires[i].getNumeroDeLicence()) {
+			if (detientJoueur(j)) {
 				throw new IllegalStateException(
 						"Le joueur " + j.getNumeroDeLicence() + " fait deja partie de l'équipe.");
 			}
 		}
 		titulaires[i] = j;
+	}
+	
+	public void ajouterJoueurRemplacant(Joueur j) throws IllegalStateException {
+		if (j.getPoste() == Poste.GARDIEN) {
+			throw new IllegalStateException("Depuis quand une equipe de foot a plusieurs gardiens ??");
+		}
+		if (estPlein(remplacants)) {
+			throw new IllegalStateException(
+					(remplacants.length - 1) + " joueurs remplacants max.");
+		}
+		int i = 0;
+		while (remplacants[i] != null) {
+			i++;
+		}
+		while (i < remplacants.length) {
+			if (detientJoueur(j)) {
+				throw new IllegalStateException(
+						"Le joueur " + j.getNumeroDeLicence() + " fait deja partie de l'équipe.");
+			}
+		}
+		remplacants[i] = j;
 	}
 }
