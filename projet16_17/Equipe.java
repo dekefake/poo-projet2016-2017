@@ -1,7 +1,7 @@
 package projet16_17;
 
 public class Equipe {
-	private Joueur[] titulaires, remplacants;
+	private Joueur[] titulaires, remplacants; // TODO : A remplacer par une structure de données :( :( :(
 	private Club club;
 	private int id; 
 
