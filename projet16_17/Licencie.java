@@ -13,9 +13,7 @@ public abstract class Licencie {
 		numeroDeLicence = licence;
 		nom = nm;
 		prenom = p;
-		dateDeValidite = (Calendar) d.clone(); // Par souci de sécurité, ne pas
-												// lier certaines choses en
-												// mémoire..
+		dateDeValidite =d;
 		club = c;
 	}
 	
@@ -25,5 +23,8 @@ public abstract class Licencie {
 	public Club getClub(){
 		return club;
 	}
-
+	
+	public boolean LicenceValide(){
+		return dateDeValidite.compareTo(dateDeValidite.getInstance())>=0;
+	}
 }

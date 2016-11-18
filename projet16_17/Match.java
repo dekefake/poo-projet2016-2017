@@ -10,5 +10,5 @@ public class Match {
 	private final int pause = 15;
 	private final int nbtemps = 2;
 	private final int tempstotal = temps * nbtemps;
-	private int [] score = new int [2]; // Score de l'equipe A = score[0], Score de l'equipe A = score[1].. TRIVIAL
+	private int scoreA, scoreB;
 }
