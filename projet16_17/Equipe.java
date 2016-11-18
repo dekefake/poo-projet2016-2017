@@ -4,8 +4,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 
 public class Equipe {
-	private Hashtable titulaires, remplacants; // TODO : A remplacer par une
-											// structure de données :( :( :(
+	private Hashtable titulaires, remplacants;
 	
 	// Hastables (key=Joueur;value=Poste)
 	private Club club;
