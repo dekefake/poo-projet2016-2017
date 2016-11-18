@@ -1,99 +1,79 @@
 package projet16_17;
 
+import java.util.Enumeration;
+import java.util.Hashtable;
+
 public class Equipe {
-	private Joueur[] titulaires, remplacants; // TODO : A remplacer par une structure de données :( :( :(
+	private Hashtable titulaires, remplacants; // TODO : A remplacer par une
+											// structure de données :( :( :(
+	
+	// Hastables (key=Joueur;value=Poste)
 	private Club club;
-	private int id; 
+	private int id,nbTitulaires,nbRemplacants,nbTitMax,nbRempMax;
 
-	public Equipe(int nbTitulaire, int nbRemplacants) throws IllegalArgumentException {
-		if (nbTitulaire < 1) {
-			throw new IllegalArgumentException("Le nombre de joueurs titulaires ne peut pas être inferieur à 1.");
-		}
-		if (nbRemplacants < 1 || nbRemplacants > 5) {
-			throw new IllegalArgumentException(
-					"Le nombre de joueurs remplacants ne peut pas être inferieur à 1 ou superieur a 5.");
-		}
-
-		titulaires = new Joueur[nbTitulaire];
-		remplacants = new Joueur[nbRemplacants];
+	public Equipe(Club c, int id, int nbTitulairesMax, int nbRMax) {
+		club=c;
+		this.id=id;
+		nbTitulaires=0;
+		nbRemplacants=0;
+		nbTitMax=nbTitulairesMax;
+		nbRempMax=nbRMax;
+		titulaires = new Hashtable();
+		remplacants = new Hashtable();
 	}
 
-	public boolean estPlein(Joueur[] t) {
-		return t[t.length - 1] != null;
+	public boolean titulairesEstPlein() {
+		return nbTitulaires==nbTitMax;
+	}
+	
+	public boolean remplacantsEstPlein() {
+		return nbRempMax==nbRemplacants;
 	}
 
 	public boolean aUnGardien() {
-		int i = 0;
-		while (titulaires[i] != null) {
-			if (titulaires[i].getPoste() == Poste.GARDIEN) {
-				return true;
-			}
-			i++;
-		}
-		return false;
+		return titulaires.containsValue(Poste.GARDIEN);
 	}
 
 	public boolean detientJoueur(Joueur j) {
-		int i = 0;
-		while (titulaires[i] != null) {
-			if (titulaires[i].equals(j)) {
-				return true;
-			}
-		}
-		i = 0;
-		while (remplacants[i] != null) {
-			if (remplacants[i].equals(j)) {
-				return true;
-			}
-		}
-		return false;
+		return titulaires.containsKey(j) || remplacants.containsValue(j);
 	}
 
 	public void ajouterJoueurTitulaire(Joueur j) throws IllegalStateException {
-		if(j.getClub()!=club){
+		if (j.getClub() != club) {
 			throw new IllegalStateException("Ce joueur ne fait pas partie du meme club que l'équipe");
 		}
 		if (aUnGardien() && j.getPoste() == Poste.GARDIEN) {
 			throw new IllegalStateException("Depuis quand une equipe de foot a plusieurs gardiens ??");
 		}
-		if (estPlein(titulaires)) {
+		if (titulairesEstPlein()) {
 			throw new IllegalStateException(
-					"Le fair play n'a jamais tué personne. " + (titulaires.length - 1) + " joueurs titulaires max.");
+					"Le fair play n'a jamais tué personne. " + nbTitMax + " joueurs titulaires max.");
 		}
-		int i = 0;
-		while (titulaires[i] != null) {
-			i++;
-		}
-		while (i < titulaires.length) {
-			if (detientJoueur(j)) {
+		if (detientJoueur(j)) {
 				throw new IllegalStateException(
 						"Le joueur " + j.getNumeroDeLicence() + " fait deja partie de l'équipe.");
-			}
+		} else {
+			titulaires.put(j,j.getPoste());
+			nbTitulaires++;
 		}
-		titulaires[i] = j;
 	}
-	
+
 	public void ajouterJoueurRemplacant(Joueur j) throws IllegalStateException {
-		if(j.getClub()!=club){
+		if (j.getClub() != club) {
 			throw new IllegalStateException("Ce joueur ne fait pas partie du meme club que l'équipe");
 		}
 		if (j.getPoste() == Poste.GARDIEN) {
 			throw new IllegalStateException("Depuis quand une equipe de foot a plusieurs gardiens ??");
 		}
-		if (estPlein(remplacants)) {
+		if (remplacantsEstPlein()) {
+			throw new IllegalStateException(nbRempMax + " joueurs remplacants max.");
+		}
+		if (detientJoueur(j)) {
 			throw new IllegalStateException(
-					(remplacants.length - 1) + " joueurs remplacants max.");
-		}
-		int i = 0;
-		while (remplacants[i] != null) {
-			i++;
-		}
-		while (i < remplacants.length) {
-			if (detientJoueur(j)) {
-				throw new IllegalStateException(
-						"Le joueur " + j.getNumeroDeLicence() + " fait deja partie de l'équipe.");
-			}
-		}
-		remplacants[i] = j;
+					"Le joueur " + j.getNumeroDeLicence() + " fait deja partie de l'équipe.");
+	} else {
+		remplacants.put(j,j.getPoste());
+		nbRemplacants++;
+	}
 	}
 }

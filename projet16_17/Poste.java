@@ -1,5 +1,5 @@
 package projet16_17;
 
 public enum Poste {
-	GARDIEN, DEFENSEUR, MILIEU, ATTAQUANT
+	GARDIEN, DEFENSEUR, MILIEU, ATTAQUANT;
 }
