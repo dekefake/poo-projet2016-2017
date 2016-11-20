@@ -14,5 +14,8 @@ public class Entraineur extends Licencie {
 			niveau = niv;
 		}
 	}
-
+	
+	public String toString(){
+		return super.toString()+"Qualité : Entraineur\nNiveau"+niveau;
+	}
 }

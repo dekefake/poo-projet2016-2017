@@ -7,4 +7,7 @@ public class Club {
 		nom = n;
 		ville = v;
 	}
+	public String getNom(){
+		return nom;
+	}
 }

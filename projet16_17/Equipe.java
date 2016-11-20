@@ -5,28 +5,28 @@ import java.util.Hashtable;
 
 public class Equipe {
 	private Hashtable titulaires, remplacants;
-	
+
 	// Hastables (key=Joueur;value=Poste)
 	private Club club;
-	private int id,nbTitulaires,nbRemplacants,nbTitMax,nbRempMax;
+	private int id, nbTitulaires, nbRemplacants, nbTitMax, nbRempMax;
 
 	public Equipe(Club c, int id, int nbTitulairesMax, int nbRMax) {
-		club=c;
-		this.id=id;
-		nbTitulaires=0;
-		nbRemplacants=0;
-		nbTitMax=nbTitulairesMax;
-		nbRempMax=nbRMax;
+		club = c;
+		this.id = id;
+		nbTitulaires = 0;
+		nbRemplacants = 0;
+		nbTitMax = nbTitulairesMax;
+		nbRempMax = nbRMax;
 		titulaires = new Hashtable();
 		remplacants = new Hashtable();
 	}
 
 	public boolean titulairesEstPlein() {
-		return nbTitulaires==nbTitMax;
+		return nbTitulaires == nbTitMax;
 	}
-	
+
 	public boolean remplacantsEstPlein() {
-		return nbRempMax==nbRemplacants;
+		return nbRempMax == nbRemplacants;
 	}
 
 	public boolean aUnGardien() {
@@ -49,10 +49,9 @@ public class Equipe {
 					"Le fair play n'a jamais tué personne. " + nbTitMax + " joueurs titulaires max.");
 		}
 		if (detientJoueur(j)) {
-				throw new IllegalStateException(
-						"Le joueur " + j.getNumeroDeLicence() + " fait deja partie de l'équipe.");
+			throw new IllegalStateException("Le joueur " + j.getNumeroDeLicence() + " fait deja partie de l'équipe.");
 		} else {
-			titulaires.put(j,j.getPoste());
+			titulaires.put(j, j.getPoste());
 			nbTitulaires++;
 		}
 	}
@@ -68,11 +67,14 @@ public class Equipe {
 			throw new IllegalStateException(nbRempMax + " joueurs remplacants max.");
 		}
 		if (detientJoueur(j)) {
-			throw new IllegalStateException(
-					"Le joueur " + j.getNumeroDeLicence() + " fait deja partie de l'équipe.");
-	} else {
-		remplacants.put(j,j.getPoste());
-		nbRemplacants++;
+			throw new IllegalStateException("Le joueur " + j.getNumeroDeLicence() + " fait deja partie de l'équipe.");
+		} else {
+			remplacants.put(j, j.getPoste());
+			nbRemplacants++;
+		}
 	}
+	
+	public String toString(){
+		return ("Equipe n°"+id+"Représente le club : "+club.getNom()+"\n     Titulaires :\n"+titulaires+"\n     Remplacants :"+remplacants);
 	}
 }
