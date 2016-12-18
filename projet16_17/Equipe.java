@@ -17,8 +17,8 @@ public class Equipe {
 		nbRemplacants = 0;
 		nbTitMax = nbTitulairesMax;
 		nbRempMax = nbRMax;
-		titulaires = new Hashtable();
-		remplacants = new Hashtable();
+		titulaires = new Hashtable(); // Key=joueur, Value=poste
+		remplacants = new Hashtable(); // Key=joueur, Value=poste
 	}
 
 	public boolean titulairesEstPlein() {
