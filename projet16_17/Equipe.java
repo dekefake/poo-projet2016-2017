@@ -43,14 +43,6 @@ public class Equipe {
 				return true;
 			}
 		}
-		keys = remplacants.keys();
-		while(keys.hasMoreElements()){
-			int key = keys.nextElement();
-			j=(Joueur)remplacants.get(key);
-			if(j.getPoste()==Poste.GARDIEN){
-				return true;
-			}
-		}
 		return false;
 	}
 
@@ -86,9 +78,6 @@ public class Equipe {
 		}
 		if (j.getClub() != club) {
 			throw new IllegalStateException("Ce joueur ne fait pas partie du meme club que l'équipe");
-		}
-		if (j.getPoste() == Poste.GARDIEN) {
-			throw new IllegalStateException("Depuis quand une equipe de foot a plusieurs gardiens ??");
 		}
 		if (remplacantsEstPlein()) {
 			throw new IllegalStateException(nbRempMax + " joueurs remplacants max.");
