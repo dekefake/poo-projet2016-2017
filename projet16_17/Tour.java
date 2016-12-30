@@ -9,9 +9,9 @@ public class Tour {
 		matchs=m;
 	}
 	
-	public Tour executerTour(){
+	public Equipe executerTournoi(){ // retourne lequipe gagnante
 		Iterator i= matchs.iterator();
-		Equipe a, b, w;
+		Equipe a, b, w=null;
 		ArrayList<Match> prochainTour=null;
 		if(matchs.size()>=2){
 			while(i.hasNext()){
@@ -19,12 +19,13 @@ public class Tour {
 				b=((Match)i.next()).jouerMatch();
 				prochainTour.add(new Match(a,b));
 			}
+			matchs=prochainTour;
+			executerTournoi();
 		} else { // FINALE !!
 			if(i.hasNext()){
 				w=((Match)i.next()).jouerMatch();
-				prochainTour.add(new Match(w,w));
 			}
 		}
-		return new Tour(prochainTour);
+		return w;
 	}
 }

@@ -48,12 +48,19 @@ public class Match {
 		}
 	}
 	
+	public void enregistrerMatch(int a, int b, boolean j){
+		// TODO : file mgmt
+	}
+	
 	public Equipe jouerMatch(){ // Retourne l'equipe gagnante
+		boolean j=false;
 		scoreA=getRandScore();
 		scoreB=getRandScore();
 		if(scoreA==scoreB){
 			concoursJongles();
+			j=true;
 		}
+		enregistrerMatch(scoreA,scoreB,j);
 		if(scoreA>scoreB){
 			return equipeA;
 		} else {
