@@ -170,10 +170,10 @@ public class Tournoi {
 			} while (choixValide);
 			choixValide = true;
 			do {
-				System.out.println("Entrez une date sous le format JJ.MM.AAAA");
+				System.out.println("Entrez une date sous le format JJ/MM/AAAA");
 				try {
 					c = in.next();
-					DateFormat dformat = new SimpleDateFormat("dd.mm.yyyy");
+					DateFormat dformat = new SimpleDateFormat("dd/MM/yyyy");
 					jDateInscription.setLenient(false);
 					if (c.length() != 10) {
 						throw new IllegalStateException();
@@ -184,9 +184,9 @@ public class Tournoi {
 					System.out.println("La date entrée est incorrecte, ou entrée de manière incorrecte.");
 					choixValide = false;
 				}
-				System.out.println(jDateInscription.get(jDateInscription.DAY_OF_MONTH) + "."
-						+ jDateInscription.get(jDateInscription.MONTH) + "."
-						+ jDateInscription.get(jDateInscription.YEAR));
+				DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		        String today = formatter.format(jDateInscription.getTime());
+		        System.out.println("Today : " + today);
 			} while (!choixValide);
 			choixValide = true;
 			do {
