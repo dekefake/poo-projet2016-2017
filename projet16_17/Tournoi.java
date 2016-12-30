@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Hashtable;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Tournoi {
@@ -62,7 +63,7 @@ public class Tournoi {
 	}
 
 	public static void menuPrincipal() {
-		int choice;
+		int choice=-1;
 		boolean one = false, two = false, three = false, four = false, five = false, six = false, choix;
 
 		do {
@@ -142,9 +143,9 @@ public class Tournoi {
 
 	public static void creerJoueurs() {
 		String c, jNom = "", jPrenom = "";
-		Calendar jDateInscription = null;
+		Calendar jDateInscription = Calendar.getInstance();
 		Club jClub = null;
-		Poste jPoste = null;
+		Poste jPoste = Poste.ATTAQUANT;
 		int jNumMaillot = -1;
 		boolean choixValide = true;
 		System.out.println("Methode creerJoueurs()");
@@ -157,7 +158,6 @@ public class Tournoi {
 			jNom = in.next();
 			System.out.println("Entrez un prenom de joueur");
 			jPrenom = in.next();
-			System.out.println(jPrenom + " et " + jNom);
 			do {
 				System.out.println("Entrez un nom de club pour ce joueur");
 				c = in.next();
@@ -173,8 +173,7 @@ public class Tournoi {
 				System.out.println("Entrez une date sous le format JJ.MM.AAAA");
 				try {
 					c = in.next();
-					DateFormat dformat = new SimpleDateFormat("dd.MM.yyyy");
-					jDateInscription = Calendar.getInstance();
+					DateFormat dformat = new SimpleDateFormat("dd.mm.yyyy");
 					jDateInscription.setLenient(false);
 					if (c.length() != 10) {
 						throw new IllegalStateException();
@@ -185,11 +184,13 @@ public class Tournoi {
 					System.out.println("La date entrée est incorrecte, ou entrée de manière incorrecte.");
 					choixValide = false;
 				}
-				System.out.println(jDateInscription.get(jDateInscription.DAY_OF_MONTH)+"."+jDateInscription.get(jDateInscription.MONTH)+"."+jDateInscription.get(jDateInscription.YEAR));
+				System.out.println(jDateInscription.get(jDateInscription.DAY_OF_MONTH) + "."
+						+ jDateInscription.get(jDateInscription.MONTH) + "."
+						+ jDateInscription.get(jDateInscription.YEAR));
 			} while (!choixValide);
 			choixValide = true;
 			do {
-				System.out.println("A quel poste joue ce joueur ?\n(Gardien/Attaquant/Defenseur/Milieu");
+				System.out.println("A quel poste joue ce joueur ?\n(Gardien/Attaquant/Defenseur/Milieu)");
 				c = in.next();
 				if (jPoste.isPoste(c)) {
 					switch (c) {
