@@ -158,9 +158,10 @@ public class Tournoi {
 			System.out.println("Entrez un prenom de joueur");
 			jPrenom = in.next();
 			do {
+				choixValide=true;
 				System.out.println("Entrez un nom de club pour ce joueur");
 				c = in.next();
-				if (equipes.containsKey(c)) {
+				if (clubs.containsKey(c)) {
 					jClub = clubs.get(c);
 				} else {
 					System.out.println("Ce club n'existe pas !");
