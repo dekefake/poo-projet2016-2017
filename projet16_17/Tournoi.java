@@ -181,7 +181,6 @@ public class Tournoi {
 					System.out.println("La date entrée est incorrecte, ou entrée de manière incorrecte.");
 					choixValide = false;
 				}
-				System.out.println(Licencie.CalendarToString(jDateInscription));
 			} while (!choixValide);
 			do {
 				choixValide = true;
@@ -223,7 +222,6 @@ public class Tournoi {
 	public static void creerClubs() {
 		String c;
 		do {
-			System.out.println("Methode creerClubs()");
 			String cNom, cVille;
 			System.out.println("Entrez un nom de club");
 			cNom = in.next();
