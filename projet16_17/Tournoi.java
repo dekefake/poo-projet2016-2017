@@ -63,7 +63,7 @@ public class Tournoi {
 	}
 
 	public static void menuPrincipal() {
-		int choice=-1;
+		int choice = -1;
 		boolean one = false, two = false, three = false, four = false, five = false, six = false, choix;
 
 		do {
@@ -148,7 +148,6 @@ public class Tournoi {
 		Poste jPoste = Poste.ATTAQUANT;
 		int jNumMaillot = -1;
 		boolean choixValide = true;
-		System.out.println("Methode creerJoueurs()");
 		do {
 			/*
 			 * numeroDeLicence = licence; nom = nm; prenom = p; dateInscription
@@ -167,29 +166,24 @@ public class Tournoi {
 					System.out.println("Ce club n'existe pas !");
 					choixValide = false;
 				}
-			} while (choixValide);
-			choixValide = true;
+			} while (!choixValide);
 			do {
+				choixValide = true;
 				System.out.println("Entrez une date sous le format JJ/MM/AAAA");
 				try {
 					c = in.next();
 					DateFormat dformat = new SimpleDateFormat("dd/MM/yyyy");
 					jDateInscription.setLenient(false);
-					if (c.length() != 10) {
-						throw new IllegalStateException();
-					}
 					jDateInscription.setTime(dformat.parse(c));
 					jDateInscription.getTime();
 				} catch (Exception e) {
 					System.out.println("La date entrée est incorrecte, ou entrée de manière incorrecte.");
 					choixValide = false;
 				}
-				DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-		        String today = formatter.format(jDateInscription.getTime());
-		        System.out.println("Today : " + today);
+				System.out.println(Licencie.CalendarToString(jDateInscription));
 			} while (!choixValide);
-			choixValide = true;
 			do {
+				choixValide = true;
 				System.out.println("A quel poste joue ce joueur ?\n(Gardien/Attaquant/Defenseur/Milieu)");
 				c = in.next();
 				if (jPoste.isPoste(c)) {
@@ -208,8 +202,8 @@ public class Tournoi {
 					choixValide = false;
 				}
 			} while (!choixValide);
-			choixValide = true;
 			do {
+				choixValide = true;
 				System.out.println("Saisissez un numero de maillot");
 				jNumMaillot = in.nextInt();
 				if (joueurs.containsKey(jNumMaillot)) {
@@ -226,10 +220,22 @@ public class Tournoi {
 	}
 
 	public static void creerClubs() {
-		System.out.println("Methode creerClubs()");
+		String c;
+		do {
+			System.out.println("Methode creerClubs()");
+			String cNom, cVille;
+			System.out.println("Entrez un nom de club");
+			cNom = in.next();
+			System.out.println("Entrez la ville d'origine du club");
+			cVille = in.next();
+			clubs.put(cNom, new Club(cNom, cVille));
+			System.out.println("\nEntrer un nouveau club ? (*/nN)");
+			c = in.next();
+		} while (!c.equals("N") && !c.equals("n"));
 	}
 
 	public static void creerArbitres() {
 		System.out.println("Methode creerArbitres()");
 	}
+
 }

@@ -1,5 +1,6 @@
 package projet16_17;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -29,8 +30,14 @@ public abstract class Licencie {
 		return dateInscription.compareTo(dateInscription.getInstance())>=0;
 	}
 	
+	public static String CalendarToString(Calendar c){
+		DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        String date = formatter.format(c.getTime());
+        return date;
+	}
+	
 	public String toString(){
 		SimpleDateFormat formatDate = new SimpleDateFormat("dd-MM-yyyy");
-		return ("Licencié n°"+numeroDeLicence+"\n"+nom+nom+" "+prenom+prenom+"\nInscrit depuis le :"+formatDate.format(dateInscription.getTime())+"\nAffilié au club de "+club.getNom());
+		return ("Licencié n°"+numeroDeLicence+"\n"+nom+nom+" "+prenom+prenom+"\nInscrit depuis le :"+CalendarToString(dateInscription)+"\nAffilié au club de "+club.getNom());
 	}
 }
