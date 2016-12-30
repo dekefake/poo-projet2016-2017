@@ -2,11 +2,11 @@ package projet16_17;
 
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Iterator;
 
 public class Equipe {
 	private Hashtable titulaires, remplacants;
 
-	// Hastables (key=Joueur;value=Poste)
 	private Club club;
 	private int id, nbTitulaires, nbRemplacants, nbTitMax, nbRempMax;
 
@@ -17,8 +17,12 @@ public class Equipe {
 		nbRemplacants = 0;
 		nbTitMax = nbTitulairesMax;
 		nbRempMax = nbRMax;
-		titulaires = new Hashtable(); // Key=joueur, Value=poste
-		remplacants = new Hashtable(); // Key=joueur, Value=poste
+		titulaires = new Hashtable<Integer, Joueur>(); // Key=licenceNum, Value=joueur
+		remplacants = new Hashtable<Integer, Joueur>(); // Key=licenceNum, Value=joueur
+	}
+	
+	public Club getClub(){
+		return club;
 	}
 
 	public boolean titulairesEstPlein() {
@@ -30,14 +34,34 @@ public class Equipe {
 	}
 
 	public boolean aUnGardien() {
-		return titulaires.containsValue(Poste.GARDIEN);
+		Enumeration<Integer> keys = titulaires.keys();
+		Joueur j;
+		while(keys.hasMoreElements()){
+			int key = keys.nextElement();
+			j=(Joueur)titulaires.get(key);
+			if(j.getPoste()==Poste.GARDIEN){
+				return true;
+			}
+		}
+		keys = remplacants.keys();
+		while(keys.hasMoreElements()){
+			int key = keys.nextElement();
+			j=(Joueur)remplacants.get(key);
+			if(j.getPoste()==Poste.GARDIEN){
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public boolean detientJoueur(Joueur j) {
-		return titulaires.containsKey(j) || remplacants.containsValue(j);
+		return titulaires.containsValue(j) || remplacants.containsValue(j);
 	}
 
 	public void ajouterJoueurTitulaire(Joueur j) throws IllegalStateException {
+		if(!j.LicenceValide()){
+			throw new IllegalStateException("La licence de ce joueur n'est plus valide");
+		}
 		if (j.getClub() != club) {
 			throw new IllegalStateException("Ce joueur ne fait pas partie du meme club que l'équipe");
 		}
@@ -51,12 +75,15 @@ public class Equipe {
 		if (detientJoueur(j)) {
 			throw new IllegalStateException("Le joueur " + j.getNumeroDeLicence() + " fait deja partie de l'équipe.");
 		} else {
-			titulaires.put(j, j.getPoste());
+			titulaires.put(j.getNumeroDeLicence(), j);
 			nbTitulaires++;
 		}
 	}
 
 	public void ajouterJoueurRemplacant(Joueur j) throws IllegalStateException {
+		if(!j.LicenceValide()){
+			throw new IllegalStateException("La licence de ce joueur n'est plus valide");
+		}
 		if (j.getClub() != club) {
 			throw new IllegalStateException("Ce joueur ne fait pas partie du meme club que l'équipe");
 		}
@@ -69,7 +96,7 @@ public class Equipe {
 		if (detientJoueur(j)) {
 			throw new IllegalStateException("Le joueur " + j.getNumeroDeLicence() + " fait deja partie de l'équipe.");
 		} else {
-			remplacants.put(j, j.getPoste());
+			remplacants.put(j.getNumeroDeLicence(), j);
 			nbRemplacants++;
 		}
 	}
