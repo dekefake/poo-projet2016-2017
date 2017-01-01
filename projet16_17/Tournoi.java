@@ -141,17 +141,16 @@ public class Tournoi {
 			} catch (NumberFormatException e) { // l'option saisie netait pas un
 												// nombre ;)
 				switch (choice) {
-				case "t":
 				case "T":
+				case "t":
 					choixNbJoueursTitParEquipe();
 					break;
-				case "j":
 				case "J":
+				case "j":
 					choixNbJoueursRempParEquipe();
 					break;
-				case "r":
 				case "R":
-
+				case "r":
 					read(clubs, "clubs.bin");
 					read(joueurs, "joueurs.bin");
 					read(equipes, "equipes.bin");
@@ -161,8 +160,8 @@ public class Tournoi {
 					three = true;
 					four = true;
 					break;
-				case "W":
 				case "w":
+				case "W":
 					if (one && two && three && four) {
 						save(clubs, "clubs.bin");
 						save(joueurs, "joueurs.bin");
@@ -244,9 +243,9 @@ public class Tournoi {
 		return s;
 	}
 
-	public static void save(Hashtable<?, ?> h, String s) {
+	public static void save(Hashtable<?, ?> h, String filename) {
 		try {
-			FileOutputStream fos = new FileOutputStream(s);
+			FileOutputStream fos = new FileOutputStream(filename);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			oos.writeObject(h);
 			oos.close();
@@ -256,9 +255,9 @@ public class Tournoi {
 		}
 	}
 
-	public static void read(Hashtable<?, ?> h, String s) {
+	public static void read(Hashtable<?, ?> h, String filename) {
 		try {
-			FileInputStream fis = new FileInputStream(s);
+			FileInputStream fis = new FileInputStream(filename);
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			try {
 				h = (Hashtable<?, ?>) ois.readObject();
@@ -275,13 +274,13 @@ public class Tournoi {
 	public static void creerEquipes() {
 		boolean choixValide;
 		String c = "";
-		int cInt = -1, i=1;
+		int cInt = -1, i = 1;
 		Joueur j;
 		Club eClub = null;
 		do {
 			do {
 				choixValide = true;
-				System.out.println("Entrez un nom de club pour cette equipe");
+				System.out.println("Sous quel club jouera cette equipe ?");
 				c = in.next();
 				if (clubs.containsKey(c)) {
 					eClub = clubs.get(c);
@@ -306,7 +305,8 @@ public class Tournoi {
 									e.ajouterJoueurTitulaire(j);
 									i++;
 								} catch (IllegalStateException e3) {
-									e3.printStackTrace();;
+									e3.printStackTrace();
+									;
 								}
 							}
 						} else {
@@ -318,8 +318,8 @@ public class Tournoi {
 					}
 				} while (!choixValide);
 			}
-			i=1;
-			while(i <= nbJoueursRempParEquipe) {
+			i = 1;
+			while (i <= nbJoueursRempParEquipe) {
 				do {
 					choixValide = true;
 					try {
