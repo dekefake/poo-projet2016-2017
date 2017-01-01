@@ -2,7 +2,7 @@ package projet16_17;
 
 import java.util.Calendar;
 
-public class Entraineur extends Licencie {
+public class Entraineur extends Licencie{
 	private int niveau;
 	
 	public Entraineur(int licence, String nm, String p, Calendar d, Club c, int niv) throws IllegalArgumentException {
@@ -16,6 +16,6 @@ public class Entraineur extends Licencie {
 	}
 	
 	public String toString(){
-		return super.toString()+"Qualité : Entraineur\nNiveau"+niveau;
+		return super.toString()+" Qualité : Entraineur Niveau"+niveau;
 	}
 }

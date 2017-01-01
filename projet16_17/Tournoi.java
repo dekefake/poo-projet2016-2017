@@ -1,19 +1,20 @@
 package projet16_17;
 
+import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Tournoi {
 
 	static Scanner in = new Scanner(System.in);
-	private static Hashtable<Integer, Equipe> equipes = new Hashtable();
-	private static Hashtable<Integer, Joueur> joueurs = new Hashtable();
-	private static Hashtable<String, Club> clubs = new Hashtable();
-	private static Hashtable<Integer, Arbitre> arbitres = new Hashtable();
+	private static Hashtable<Integer, Equipe> equipes = new Hashtable<Integer, Equipe>();
+	private static Hashtable<Integer, Joueur> joueurs = new Hashtable<Integer, Joueur>();
+	private static Hashtable<String, Club> clubs = new Hashtable<String, Club>();
+	private static Hashtable<Integer, Arbitre> arbitres = new Hashtable<Integer, Arbitre>();
 	private static int nbLicencies = 0;
 	private static int nbEquipes = 0;
 	private static int nbJoueursTitParEquipe = 9;
@@ -106,6 +107,10 @@ public class Tournoi {
 								"Vous devez creer toutes les structures du tournoi avant de lancer le simulateur de tournoi\nVeuillez entrer une autre option");
 						choix = false;
 					}
+					if (choiceInt == 6 && !five) {
+						System.out.println("Vous n'avez pas affiché le récapitulatif.");
+						choiceInt = 5;
+					}
 				} while (choiceInt < 1 || choiceInt > 6 || !choix);
 				switch (choiceInt) {
 				case 1:
@@ -137,24 +142,36 @@ public class Tournoi {
 												// nombre ;)
 				switch (choice) {
 				case "t":
-					choixNbJoueursTitParEquipe();
-					break;
 				case "T":
 					choixNbJoueursTitParEquipe();
 					break;
 				case "j":
-					choixNbJoueursRempParEquipe();
-					break;
 				case "J":
 					choixNbJoueursRempParEquipe();
 					break;
 				case "r":
-					break;
 				case "R":
-					break;
-				case "w":
+
+					read(clubs, "clubs.bin");
+					read(joueurs, "joueurs.bin");
+					read(equipes, "equipes.bin");
+					read(arbitres, "arbitres.bin");
+					one = true;
+					two = true;
+					three = true;
+					four = true;
 					break;
 				case "W":
+				case "w":
+					if (one && two && three && four) {
+						save(clubs, "clubs.bin");
+						save(joueurs, "joueurs.bin");
+						save(equipes, "equipes.bin");
+						save(arbitres, "arbitres.bin");
+					} else {
+						System.out.println(
+								"Vous n'avez pas crée toutes les structures Clubs, Joueurs, Equipes et Arbitres. Sauvegarde impossible.");
+					}
 					break;
 				}
 			}
@@ -203,20 +220,68 @@ public class Tournoi {
 	}
 
 	public static void recap() {
-		System.out.println("Methode recap()");
+		System.out.println(
+				"-------------------- RECAPITULATIF DES EFFECTIFS ET STRUCTURES DU TOURNOI --------------------");
+		System.out.println("\n\nClubs enregistrés : \n" + MapToString(clubs));
+		System.out.println("\n\nArbitres enregistrés : \n" + MapToString(arbitres));
+		System.out.println("\n\nJoueurs enregistrés : \n" + MapToString(joueurs));
+		System.out.println("\n\nEquipes enregistrées : \n" + MapToString(equipes));
+	}
+
+	public static String MapToString(Hashtable<?, ?> h) {
+		String s = "";
+		Enumeration<?> keys = h.keys();
+		while (keys.hasMoreElements()) {
+			String key = String.valueOf(keys.nextElement());
+			try {
+				int keyInt = Integer.parseInt(key);
+				s += h.get(keyInt) + "\n";
+			} catch (NumberFormatException e) {
+				s += h.get(key) + "\n";
+			}
+
+		}
+		return s;
+	}
+
+	public static void save(Hashtable<?, ?> h, String s) {
+		try {
+			FileOutputStream fos = new FileOutputStream(s);
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(h);
+			oos.close();
+			fos.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void read(Hashtable<?, ?> h, String s) {
+		try {
+			FileInputStream fis = new FileInputStream(s);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			try {
+				h = (Hashtable<?, ?>) ois.readObject();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+			ois.close();
+			fis.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void creerEquipes() {
-		System.out.println("Methode creerEquipes()");
 		boolean choixValide;
 		String c = "";
-		int cInt = -1;
+		int cInt = -1, i=1;
 		Joueur j;
 		Club eClub = null;
 		do {
 			do {
 				choixValide = true;
-				System.out.println("Entrez un nom de club pour ce joueur");
+				System.out.println("Entrez un nom de club pour cette equipe");
 				c = in.next();
 				if (clubs.containsKey(c)) {
 					eClub = clubs.get(c);
@@ -227,11 +292,11 @@ public class Tournoi {
 			} while (!choixValide);
 			nbEquipes++;
 			Equipe e = new Equipe(eClub, nbEquipes, nbJoueursTitParEquipe, nbJoueursRempParEquipe);
-			for (int i = 1; i <= nbJoueursTitParEquipe; i++) {
+			while (i <= nbJoueursTitParEquipe) {
 				do {
 					choixValide = true;
 					try {
-						System.out.println("Saisir le numero de licence du joueur a ajouter a l'équipe");
+						System.out.println("Saisir le numero de licence du joueur titulaire a ajouter a l'équipe");
 						c = in.next();
 						cInt = Integer.parseInt(c);
 						if (joueurs.containsKey(cInt)) {
@@ -239,10 +304,13 @@ public class Tournoi {
 							if (j.getClub().equals(eClub)) {
 								try {
 									e.ajouterJoueurTitulaire(j);
+									i++;
 								} catch (IllegalStateException e3) {
-									System.out.println(e3.getMessage());
+									e3.printStackTrace();;
 								}
 							}
+						} else {
+							System.out.println("Ce joueur n'existe pas !");
 						}
 					} catch (NumberFormatException e2) {
 						choixValide = false;
@@ -250,11 +318,12 @@ public class Tournoi {
 					}
 				} while (!choixValide);
 			}
-			for (int i = 1; i <= nbJoueursRempParEquipe; i++) {
+			i=1;
+			while(i <= nbJoueursRempParEquipe) {
 				do {
 					choixValide = true;
 					try {
-						System.out.println("Saisir le numero de licence du joueur a ajouter a l'équipe");
+						System.out.println("Saisir le numero de licence du joueur remplacant a ajouter a l'équipe");
 						c = in.next();
 						cInt = Integer.parseInt(c);
 						if (joueurs.containsKey(cInt)) {
@@ -262,10 +331,13 @@ public class Tournoi {
 							if (j.getClub().equals(eClub)) {
 								try {
 									e.ajouterJoueurRemplacant(j);
+									i++;
 								} catch (IllegalStateException e3) {
-									System.out.println(e3.getMessage());
+									e3.printStackTrace();
 								}
 							}
+						} else {
+							System.out.println("Ce joueur n'existe pas !");
 						}
 					} catch (NumberFormatException e2) {
 						choixValide = false;
@@ -308,7 +380,7 @@ public class Tournoi {
 			} while (!choixValide);
 			do {
 				choixValide = true;
-				System.out.println("Entrez une date sous le format JJ/MM/AAAA");
+				System.out.println("Entrez la date de validité de la licence sous le format JJ/MM/AAAA");
 				try {
 					c = in.next();
 					DateFormat dformat = new SimpleDateFormat("dd/MM/yyyy");
@@ -399,7 +471,7 @@ public class Tournoi {
 			} while (!choixValide);
 			do {
 				choixValide = true;
-				System.out.println("Entrez une date sous le format JJ/MM/AAAA");
+				System.out.println("Entrez la date de validité de la licence sous le format JJ/MM/AAAA");
 				try {
 					c = in.next();
 					DateFormat dformat = new SimpleDateFormat("dd/MM/yyyy");

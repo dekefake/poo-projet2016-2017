@@ -1,16 +1,17 @@
 package projet16_17;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Tour {
-	private ArrayList<Match> matchs;
+public class Tour implements Serializable{
+	private static ArrayList<Match> matchs;
 	
 	public Tour(ArrayList<Match> m){
 		matchs=m;
 	}
 	
 	public Equipe executerTournoi(){ // retourne lequipe gagnante
-		Iterator i= matchs.iterator();
+		Iterator<Match> i= matchs.iterator();
 		Equipe a, b, w=null;
 		ArrayList<Match> prochainTour=null;
 		if(matchs.size()>=2){

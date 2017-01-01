@@ -29,6 +29,6 @@ public class Joueur extends Licencie {
 	}
 	
 	public String toString(){
-		return super.toString()+"Qualité : Joueur\nPoste : "+poste+"\nMaillot n°"+numeroDeMaillot;
+		return super.toString()+" Qualité : Joueur Poste : "+poste+" Maillot n°"+numeroDeMaillot;
 	}
 }

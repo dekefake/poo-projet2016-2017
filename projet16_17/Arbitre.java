@@ -15,6 +15,6 @@ public class Arbitre extends Licencie {
 		}
 	}
 	public String toString(){
-		return super.toString()+"Qualité : Arbitre\nCatégorie :"+categorie;
+		return super.toString()+" Qualité : Arbitre Catégorie :"+categorie;
 	}
 }

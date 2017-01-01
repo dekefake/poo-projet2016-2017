@@ -1,11 +1,12 @@
 package projet16_17;
 
+import java.io.Serializable;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
 
-public class Equipe {
-	private Hashtable titulaires, remplacants;
+public class Equipe implements Serializable{
+	private Hashtable<Integer, Joueur> titulaires, remplacants;
 
 	private Club club;
 	private int id, nbTitulaires, nbRemplacants, nbTitMax, nbRempMax;
@@ -91,6 +92,6 @@ public class Equipe {
 	}
 	
 	public String toString(){
-		return ("Equipe n°"+id+"Représente le club : "+club.getNom()+"\n     Titulaires :\n"+titulaires+"\n     Remplacants :"+remplacants);
+		return ("Equipe n°"+id+"  Représente le club : "+club.getNom()+"\n     Titulaires :\n"+Tournoi.MapToString(titulaires)+"\n     Remplacants :"+Tournoi.MapToString(remplacants));
 	}
 }

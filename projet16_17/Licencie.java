@@ -1,21 +1,22 @@
 package projet16_17;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public abstract class Licencie {
+public abstract class Licencie implements Serializable{
 
 	private int numeroDeLicence;
 	private String nom, prenom;
-	private Calendar dateInscription;
+	private Calendar dateValiditeLicence;
 	private Club club;
 
 	public Licencie(int licence, String nm, String p, Calendar d, Club c) {
 		numeroDeLicence = licence;
 		nom = nm;
 		prenom = p;
-		dateInscription =d;
+		dateValiditeLicence =d;
 		club = c;
 	}
 	
@@ -27,7 +28,7 @@ public abstract class Licencie {
 	}
 	
 	public boolean LicenceValide(){
-		return dateInscription.compareTo(dateInscription.getInstance())>=0;
+		return dateValiditeLicence.compareTo(Calendar.getInstance())>=0;
 	}
 	
 	public static String CalendarToString(Calendar c){
@@ -37,7 +38,6 @@ public abstract class Licencie {
 	}
 	
 	public String toString(){
-		SimpleDateFormat formatDate = new SimpleDateFormat("dd-MM-yyyy");
-		return ("Licencié n°"+numeroDeLicence+"\n"+nom+nom+" "+prenom+prenom+"\nInscrit depuis le :"+CalendarToString(dateInscription)+"\nAffilié au club de "+club.getNom());
+		return ("Licencié n°"+numeroDeLicence+" Nom : "+nom+" Prenom : "+prenom+" Licence valide jusqu'au :"+CalendarToString(dateValiditeLicence)+" Affilié au club de "+club.getNom());
 	}
 }

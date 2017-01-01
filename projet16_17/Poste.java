@@ -1,6 +1,8 @@
 package projet16_17;
 
-public enum Poste {
+import java.io.Serializable;
+
+public enum Poste implements Serializable{
 	GARDIEN, DEFENSEUR, MILIEU, ATTAQUANT;
 
 	public boolean isPoste(String s) {

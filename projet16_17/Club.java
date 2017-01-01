@@ -1,6 +1,8 @@
 package projet16_17;
 
-public class Club {
+import java.io.Serializable;
+
+public class Club implements Serializable{
 	
 	private String nom, ville;
 

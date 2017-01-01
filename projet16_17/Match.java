@@ -1,8 +1,9 @@
 package projet16_17;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
-public class Match {
+public class Match implements Serializable{
 	private Equipe equipeA, equipeB;
 	private Arbitre mrLArbitre;
 	private Calendar heureDebut;
