@@ -38,6 +38,6 @@ public abstract class Licencie implements Serializable{
 	}
 	
 	public String toString(){
-		return ("Licencié n°"+numeroDeLicence+" Nom : "+nom+" Prenom : "+prenom+" Licence valide jusqu'au :"+CalendarToString(dateValiditeLicence)+" Affilié au club de "+club.getNom());
+		return ("Licencié n°"+numeroDeLicence+" Nom : "+nom+" Prenom : "+prenom+" Licence valide jusqu'au : "+CalendarToString(dateValiditeLicence)+" Affilié au club de "+club.getNom());
 	}
 }

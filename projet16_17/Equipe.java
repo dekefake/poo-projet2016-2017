@@ -92,6 +92,6 @@ public class Equipe implements Serializable{
 	}
 	
 	public String toString(){
-		return ("Equipe n°"+id+"  Représente le club : "+club.getNom()+"\n     Titulaires :\n"+Tournoi.MapToString(titulaires)+"\n     Remplacants :"+Tournoi.MapToString(remplacants));
+		return ("Equipe n°"+id+"  Représente le club : "+club.getNom()+"\n     Titulaires :\n"+Tournoi.MapToString(titulaires)+"\n     Remplacants :\n"+Tournoi.MapToString(remplacants));
 	}
 }

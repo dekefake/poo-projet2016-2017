@@ -22,7 +22,9 @@ public class Tournoi {
 
 	public static void afficherStade() {
 		System.out.println(
-				" --------------------------------GESTIONNAIRE DE TOURNOI DE FOOTBALL--------------------------------\n\n");
+				" --------------------------------GESTIONNAIRE DE TOURNOI DE FOOTBALL--------------------------------\n");
+		System.out.println(
+				" --------------------------A lancer dans un terminal de largeur minimum 101-------------------------\n\n");
 		System.out.println("                                  Selectionnez une option ( [1;6] )");
 		System.out.println(
 				" --------------------------------------------------------------------------------------------------- ");
@@ -65,7 +67,11 @@ public class Tournoi {
 		System.out.println(
 				" ---------------------------------------------------------------------------------------------------\n\n");
 		System.out.println(
-				"Options avancées :\n   tT. Saisir le nombre de joueurs titulaires par équipe (par défaut, 9)\n   jJ. Saisir le nombre de joueurs remplacants par équipe (par défaut, 3)\n   rR. Lire la configuration depuis un fichier (rR)\n   wW. Ecrire la configuration vers un fichier");
+				"Options avancées :\n   tT. Saisir le nombre de joueurs titulaires par équipe (par défaut: 9, actuellement : "
+						+ nbJoueursTitParEquipe
+						+ ")\n   jJ. Saisir le nombre de joueurs remplacants par équipe (par défaut: 3, actuellement : "
+						+ nbJoueursRempParEquipe
+						+ ")\n   rR. Lire la configuration depuis un fichier (rR)\n   wW. Ecrire la configuration vers un fichier");
 	}
 
 	public static void menuPrincipal() {
@@ -134,7 +140,7 @@ public class Tournoi {
 					five = true;
 					break;
 				case 6:
-					System.out.println("six");
+					lancerTournoi();
 					six = true;
 					break;
 				}
@@ -499,4 +505,20 @@ public class Tournoi {
 		} while (!c.equals("N") && !c.equals("n"));
 	}
 
+	public static void lancerTournoi() {
+		while (!pow2(equipes.size())) {
+			System.out.println("Le nombre d'équipes doit etre une puissance de deux. Vous avez crée " + equipes.size()
+					+ " équipes. Veuillez en rajouter.");
+			creerEquipes();
+		}
+		Tour t = new Tour(equipes);
+		System.out.println(t.executerTournoi());
+	}
+
+	public static boolean pow2(int n) {
+		while (n % 2 == 0) {
+			n = n / 2;
+		}
+		return (n == 1);
+	}
 }

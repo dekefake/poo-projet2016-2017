@@ -6,8 +6,17 @@ import java.util.*;
 public class Tour implements Serializable{
 	private static ArrayList<Match> matchs;
 	
-	public Tour(ArrayList<Match> m){
-		matchs=m;
+	public Tour(Hashtable<Integer, Equipe> equipes){
+		Equipe a, b;
+		int key;
+		Enumeration<Integer> keys = equipes.keys();
+		while (keys.hasMoreElements()) {
+			key=keys.nextElement();
+			a=equipes.get(key);
+			key=keys.nextElement();
+			b=equipes.get(key);
+			matchs.add(new Match(a,b));
+		}
 	}
 	
 	public Equipe executerTournoi(){ // retourne lequipe gagnante
