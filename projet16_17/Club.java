@@ -33,4 +33,8 @@ public class Club implements Serializable{
 	public String getNom(){
 		return nom;
 	}
+	
+	public String toString(){
+		return "Club de la ville de "+ville+"; nom : "+nom;
+	}
 }
